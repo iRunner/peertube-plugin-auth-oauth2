@@ -17,5 +17,5 @@ function getValidUserName(username, email) {
 
 module.exports = {
   getRandomBytes,
-  isUserNameValid
+  getValidUserName
 };
