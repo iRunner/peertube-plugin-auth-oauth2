@@ -2,7 +2,8 @@ const ClientOAuth2 = require('client-oauth2');
 const popsicle = require('popsicle');
 
 const {
-  getRandomBytes
+  getRandomBytes,
+  getValidUserName,
 } = require('./helpers');
 
 const store = {
@@ -94,8 +95,8 @@ async function handleCallback(peertubeHelpers, settingsManager, req, res) {
         ).then(
           async (identityResponse) => {
             const identityData = await identityResponse.json();
-            const username = identityData[store.identityUsernameField];
             const email = identityData[store.identityEmailField];
+            const username = getValidUserName(identityData[store.identityUsernameField], email);
             const role = 2; // Admin = 0, Moderator = 1, User = 2
             return store.userAuthenticated({
               res,

@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const { generateFromEmail, generateUsername } = require("unique-username-generator");
 
 function getRandomBytes(size) {
   return new Promise((res, rej) => {
@@ -9,6 +10,12 @@ function getRandomBytes(size) {
   })
 }
 
+function getValidUserName(username, email) {
+  const usernameRegex = /^[a-z0-9_.]+$/
+  return (usernameRegex.test(username) ? username : generateFromEmail(email)) || generateUsername();
+}
+
 module.exports = {
-  getRandomBytes
+  getRandomBytes,
+  isUserNameValid
 };
